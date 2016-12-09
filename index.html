@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html ng-app="icloud">
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" href="css/main.css" />
+		<script src="http://cdn.bootcss.com/angular.js/1.5.8/angular.js"></script>
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript" src="js/index.js"></script>
+			
+		
+	</head>
+	<body ng-controller="icloudCtrl"  ng-click="add2();save2local()">
+		<div class="content">
+			<div class="menu">
+			   <ul class="icloud">
+			   	   <li>
+			   	   	 <span></span>
+			   	   	 <span>提醒事项</span>
+			   	   	 <i></i>
+			   	   </li>
+			   	   <li>
+			   	   	  <em ng-click="addList();save2local()"></em>
+			   	   </li>
+			   </ul>
+			   <div my-ul>
+					 <div class="list1 list3">
+					   	<div class="clock"></div>
+					   	<span>已计划</span>
+					   	<div class="f-x"></div>
+					 </div>
+				   	 <div class="list list3" ng-repeat="v in lists track by $index">
+				   	   <div class="dian {{v.theme}}"></div>
+				   	   <div class="title"></div>
+				   	   <div class="f-x1"></div>
+				   	   <div class="wifi"></div>
+				   	   <input type="text" value="{{v.name}}"  ng-model="v.name"/>
+				   </div>
+			   </div>
+			  
+		    </div>
+		    <div class="menu-list">
+		    	<div class="first">
+		    		<div class="search">
+		    			<div><em></em></div>
+		    			<input type="text" placeholder="搜索所有提醒" / >
+		    		</div>
+		    		<div class="user">
+		    			<div class="name">杨红玲</div>
+		    			<i></i>
+		    		</div>
+		    	</div>
+		    	<div class="second" ng-back>
+		    		<div class="dazi {{lists[cu].theme}}">
+		    			<h1 class="">{{lists[cu].name}}</h1>
+		    			<div ng-x><span>选项</span></div>
+		    			<div class="f-x3"></div>
+		    		</div>
+		    		<div class="option">
+                      	<h1 class="over" ng-click="zhuan()">已完成:<span>{{count()}}项</span></h1>	
+                      	<div class="sanjiao"></div>
+                      	<div class="clear {{lists[cu].theme}}" ng-click="clear()">清除所有已完成</div>
+		    		</div>
+		    		<!--已完成-->
+		    		<div class="finish">
+		    		     <div class="time" >
+		    		     	<h3>2016年11月17日星期四</h3>
+		    		     	<div class="f-x51"></div>
+		    		     	<div class="f-x52"></div>
+		    		     </div>
+		    		     <div ng-if="v.state===1" class="finish-lis things" ng-repeat="v in lists[cu].todos track by $index">
+		    		     	<div class="bx">
+		    		     		<div class="bgcolor {{lists[cu].theme}}"></div>
+				    			<div class="top-xian {{lists[cu].theme}}"></div>
+				    			<div class="bottom-xian {{lists[cu].theme}}"></div>
+		    		     	</div>
+	                      	<div class="f-x61"></div>
+	                      	<div class="f-x62"></div>
+	                      	<div class="quan2 quan5{{lists[cu].theme}}" ng-click="v.state=0">
+	                      		<div class="dian3 dian5{{lists[cu].theme}}"></div>
+	                      	</div>
+	                      	<input type="text" value="{{v.name}}"/>
+	                      	<h2  class="h2{{lists[cu].theme}} infor">详细信息</h2>
+		    		     </div>
+		    		</div>
+		    		<!--未完成-->
+	    		    <div  ng-if="v.state===0" class="doing-lis things"  ng-repeat="v in lists[cu].todos track by $index">
+	    		     	<div class="bx">
+	    		     		<div class="bgcolor {{lists[cu].theme}}"></div>
+			    			<div class="top-xian {{lists[cu].theme}}"></div>
+			    			<div class="bottom-xian {{lists[cu].theme}}"></div>
+	    		     	</div>
+                      	<div class="f-x71"></div>
+                      	<div class="f-x72"></div>
+                      	<div class="quan2 quan4{{lists[cu].theme}}" ng-click="v.state=1">
+                      		<div class="dian3 dian5{{lists[cu].theme}}"></div>
+                      	</div>
+                      	<input type="text" value="{{v.name}}"/>
+                      	<h2  class="h2{{lists[cu].theme}} infor">详细信息</h2>
+	    		     </div>
+		    		<!--新增列表-->
+		    		<div  class="todos-lis things">
+		    			<div class="bgcolor {{lists[cu].theme}}"></div>
+		    			<div class="top-xian {{lists[cu].theme}}"></div>
+		    			<div class="bottom-xian {{lists[cu].theme}}"></div>
+		    			<div class="quan2 quan4{{lists[cu].theme}}"></div>
+		    			<input type="text" value="{{name}}" id="input"/>
+		    			<h2 class="h2{{lists[cu].theme}} infor1">详细信息</h2>
+		    		</div>
+		    		<!--未完成-->
+		    		<div class="option " ng-click="xian()">
+                      	<h1>新项目</h1>
+                      	<div class="f-x41"></div>
+                      	<div class="f-x42"></div>
+		    		</div>
+		    	</div>
+		    </div>
+		</div>
+		<div class="kuang">
+			<div class="kuang-content">
+				<ul class="dong">
+					<li><span class="delete">删除</span></li>
+					<li><span class="add">完成</span></li>
+				</ul>
+			</div>
+		</div>
+		<div class="kuang2">
+			<div class="kuang2-content">
+				<div class="kuang2-top">
+					<input type="text" class="selectorText {{lists[cu].theme}}" ng-model="lists[cu].name" ng-keyup="save2local()"/>
+					<h3 class="">列表颜色</h3>
+					<ul ng-color>
+						<li  id="color1-1" class="quan1" ng-repeat="v in color">
+							<em id="{{v}}" class="dian"  ng-click="lists[cu].theme = v;save2local()"></em>
+						</li>	
+					</ul>
+				</div>
+				<ul class="dong1">
+					<li class="dong2"><span class="delete1" ng-click="del()">删除</span></li>
+					<li class="dong2"><span class="quxiao">取消</span><span class="add1">完成</span></li>
+				</ul>
+				<strong></strong>
+			</div>
+		</div>
+		<div class="tan">
+			<div class="jingao"></div>
+			<div class="tan-text">
+				<h3>无法删除新列表</h3>
+				<p>您最少拥有一个自己的提醒列表，若要删除此列表，请新建一个列表!</p>
+			</div>
+			<strong class="ok" ng-click="hui()">好</strong>
+		</div>
+	</body>
+</html>
